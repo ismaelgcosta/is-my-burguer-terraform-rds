@@ -21,6 +21,11 @@ resource "aws_security_group" "postgres" {
   }
 }
 
+resource "aws_db_subnet_group" "db_subnet_group" {
+  name       = "ismyburguer-db-subnet-group"
+  subnet_ids = module.vpc.public_subnets
+}
+
 resource "aws_rds_cluster" "cluster" {
   engine                  = "aurora-postgresql"
   engine_mode             = "provisioned"

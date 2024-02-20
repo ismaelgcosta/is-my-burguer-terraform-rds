@@ -25,9 +25,9 @@ resource "aws_rds_cluster" "cluster" {
   engine                  = "aurora-postgresql"
   engine_mode             = "provisioned"
   engine_version          = "14.6"
-  cluster_identifier      = ismyburguer
-  master_username         = ismyburguer
-  master_password         = ismyburguer
+  cluster_identifier      = "ismyburguer"
+  master_username         = "ismyburguer"
+  master_password         = "ismyburguer"
 
   db_subnet_group_name    = aws_db_subnet_group.db_subnet_group.name
   

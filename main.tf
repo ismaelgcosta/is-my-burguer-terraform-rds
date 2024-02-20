@@ -21,20 +21,32 @@ resource "aws_security_group" "postgres" {
   }
 }
 
-resource "aws_db_instance" "ismyburguer" {
-  engine               = "aurora-postgresql"
-  engine_version       = "14.6"
-  instance_class       = "db.t3.medium"
-  username             = "ismyburguer"
-  password             = "ismyburguer"
-  port = 5433
-  parameter_group_name = "default.postgres15"
-  vpc_security_group_ids = [aws_security_group.postgres.id]
+resource "aws_rds_cluster" "cluster" {
+  engine                  = "aurora-postgresql"
+  engine_mode             = "provisioned"
+  engine_version          = "14.6"
+  cluster_identifier      = ismyburguer
+  master_username         = ismyburguer
+  master_password         = ismyburguer
+
+  db_subnet_group_name    = aws_db_subnet_group.db_subnet_group.name
+  
+  backup_retention_period = 7
+  skip_final_snapshot     = true
+}
+
+resource "aws_rds_cluster_instance" "cluster_instances" {
+  identifier         = "ismyburguer-${count.index}"
+  count              = 1
+  cluster_identifier = aws_rds_cluster.cluster.id
+  instance_class     = "db.t3.medium"
+  engine             = aws_rds_cluster.cluster.engine
+  engine_version     = aws_rds_cluster.cluster.engine_version
   publicly_accessible    = true # Only for testing!
   skip_final_snapshot    = true
 }
 
 output "rds_address" {
   description = "RDS address"
-  value       = aws_db_instance.ismyburguer.address
+  value       = aws_rds_cluster_instance.ismyburguer.address
 }

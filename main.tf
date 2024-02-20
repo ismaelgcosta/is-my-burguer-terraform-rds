@@ -25,7 +25,7 @@ resource "aws_db_instance" "ismyburguer" {
   allocated_storage    = 10
   engine               = "aurora-postgresql"
   engine_version       = "14.6"
-  instance_class       = "db.t2.micro"
+  instance_class       = "db.t3.medium"
   username             = "ismyburguer"
   password             = "ismyburguer"
   port = 5433

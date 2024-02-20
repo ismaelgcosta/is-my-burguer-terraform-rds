@@ -26,8 +26,8 @@ resource "aws_db_instance" "ismyburguer" {
   engine               = "postgres"
   engine_version       = "15.5"
   instance_class       = "db.t2.micro"
-  username             = "${env.DB_USERNAME}"
-  password             = "${env.DB_PASSWORD}"
+  username             = "ismyburguer"
+  password             = "ismyburguer"
   parameter_group_name = "default.postgres15"
   vpc_security_group_ids = [aws_security_group.postgres.id]
   publicly_accessible    = true # Only for testing!

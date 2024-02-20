@@ -23,8 +23,8 @@ resource "aws_security_group" "postgres" {
 
 resource "aws_db_instance" "ismyburguer" {
   allocated_storage    = 10
-  engine               = "postgres"
-  engine_version       = "15.5"
+  engine               = "aurora-postgresql"
+  engine_version       = "14.6"
   instance_class       = "db.t2.micro"
   username             = "ismyburguer"
   password             = "ismyburguer"

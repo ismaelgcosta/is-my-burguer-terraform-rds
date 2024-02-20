@@ -53,9 +53,6 @@ resource "aws_rds_cluster" "cluster" {
   master_password         = "ismyburguer"
 
   db_subnet_group_name    = aws_db_subnet_group.db_subnet_group.name
-  
-  backup_retention_period = 7
-  skip_final_snapshot     = true
 }
 
 resource "aws_rds_cluster_instance" "cluster_instances" {

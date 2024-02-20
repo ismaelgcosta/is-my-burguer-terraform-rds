@@ -28,7 +28,7 @@ resource "aws_db_instance" "ismyburguer" {
   instance_class       = "db.t2.micro"
   username             = "ismyburguer"
   password             = "ismyburguer"
-  db_instance_port     = 5433
+  port = 5433
   parameter_group_name = "default.postgres15"
   vpc_security_group_ids = [aws_security_group.postgres.id]
   publicly_accessible    = true # Only for testing!

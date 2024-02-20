@@ -10,8 +10,8 @@ module "vpc" {
   cidr                 = "10.0.0.0/16"
   azs                  = data.aws_availability_zones.zones.names
   public_subnets       = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
-  enable_dns_hostnames = true
-  enable_dns_support   = true
+  # rds require at least 2 subnet to launch an instance
+  private_subnets      = ["10.0.3.0/24", "10.0.4.0/24"]
 }
 
 resource "aws_security_group" "postgres" {

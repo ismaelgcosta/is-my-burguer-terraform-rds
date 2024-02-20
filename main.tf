@@ -22,14 +22,12 @@ resource "aws_security_group" "postgres" {
 }
 
 resource "aws_db_instance" "ismyburguer" {
-  engine_mode          = "provisioned"
   engine               = "aurora-postgresql"
   engine_version       = "14.6"
   instance_class       = "db.t3.medium"
   username             = "ismyburguer"
   password             = "ismyburguer"
   port = 5433
-  iops = 100
   parameter_group_name = "default.postgres15"
   vpc_security_group_ids = [aws_security_group.postgres.id]
   publicly_accessible    = true # Only for testing!

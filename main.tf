@@ -22,7 +22,7 @@ resource "aws_security_group" "postgres" {
 }
 
 resource "aws_db_instance" "ismyburguer" {
-  allocated_storage    = 10
+  engine_mode          = "provisioned"
   engine               = "aurora-postgresql"
   engine_version       = "14.6"
   instance_class       = "db.t3.medium"

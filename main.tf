@@ -147,35 +147,6 @@ provider "aws" {
   region = local.region2
 }
 
-module "kms" {
-  source      = "terraform-aws-modules/kms/aws"
-  version     = "~> 1.0"
-  description = "KMS key for cross region automated backups replication"
-
-  # Aliases
-  aliases                 = [local.name]
-  aliases_use_name_prefix = true
-
-  key_owners = [data.aws_caller_identity.current.arn]
-
-  tags = local.tags
-
-  providers = {
-    aws = aws.region2
-  }
-}
-
-module "db_automated_backups_replication" {
-  source = "../../modules/db_instance_automated_backups_replication"
-
-  source_db_instance_arn = module.db.db_instance_arn
-  kms_key_arn            = module.kms.key_arn
-
-  providers = {
-    aws = aws.region2
-  }
-}
-
 ################################################################################
 # Supporting Resources
 ################################################################################

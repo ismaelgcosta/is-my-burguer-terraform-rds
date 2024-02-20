@@ -1,9 +1,16 @@
-provider "aws" {
-  region = "us-east-1"
+terraform {
+  required_version = ">= 1.5"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 5.37"
+    }
+  }
 }
 
-data "aws_vpc" "default" {
-  default = true
+provider "aws" {
+  region = "us-east-1"
 }
 
 resource "aws_security_group" "postgres" {
@@ -25,12 +32,11 @@ resource "aws_security_group" "postgres" {
   }
 }
 
-resource "aws_db_instance" "this" {
+resource "aws_db_instance" "ismyburguer" {
   allocated_storage    = 10
   engine               = "postgres"
   engine_version       = "15.5"
   instance_class       = "db.t2.micro"
-  name                 = "ismyburguer"
   username             = "${env.DB_USERNAME}"
   password             = "${env.DB_PASSWORD}"
   parameter_group_name = "default.postgres15"
@@ -41,5 +47,5 @@ resource "aws_db_instance" "this" {
 
 output "rds_address" {
   description = "RDS address"
-  value       = aws_db_instance.this.address
+  value       = aws_db_instance.ismyburguer.address
 }

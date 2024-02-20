@@ -53,6 +53,7 @@ resource "aws_rds_cluster" "cluster" {
   master_password         = "ismyburguer"
 
   db_subnet_group_name    = aws_db_subnet_group.db_subnet_group.name
+  skip_final_snapshot    = true
 }
 
 resource "aws_rds_cluster_instance" "cluster_instances" {
@@ -63,7 +64,6 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
   engine             = aws_rds_cluster.cluster.engine
   engine_version     = aws_rds_cluster.cluster.engine_version
   publicly_accessible    = true # Only for testing!
-  skip_final_snapshot    = true
 }
 
 output "rds_address" {

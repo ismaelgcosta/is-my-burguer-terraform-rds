@@ -4,14 +4,20 @@ provider "aws" {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "5.5.2"
 
   name                 = "ismyburguer"
   cidr                 = "10.0.0.0/16"
-  azs                  = data.aws_availability_zones.zones.names
+  azs                  = ["us-east-1a", "us-east-1b", "us-east-1c"]
   public_subnets       = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
   # rds require at least 2 subnet to launch an instance
   private_subnets      = ["10.0.3.0/24", "10.0.4.0/24"]
+
+  create_database_subnet_group           = true
+  create_database_subnet_route_table     = true
+  create_database_internet_gateway_route = true
+
+  enable_dns_hostnames = true
+  enable_dns_support   = true
 }
 
 resource "aws_security_group" "postgres" {

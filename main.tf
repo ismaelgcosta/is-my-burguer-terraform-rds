@@ -48,10 +48,6 @@ provider "postgresql" {
   connect_timeout = 15
 }
 
-resource "postgresql-ismyburguer" "ismyburguer" {
-  name = "ismyburguer"
-}
-
 output "rds_address" {
   description = "RDS address"
   value       = aws_db_instance.this.address

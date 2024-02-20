@@ -48,5 +48,5 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
 
 output "rds_address" {
   description = "RDS address"
-  value       = aws_rds_cluster_instance.ismyburguer.address
+  value       = aws_rds_cluster_instance.cluster_instances.address
 }

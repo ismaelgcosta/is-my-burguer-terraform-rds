@@ -66,7 +66,3 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
   publicly_accessible    = true # Only for testing!
 }
 
-output "rds_address" {
-  description = "RDS address"
-  value       = aws_rds_cluster_instance.cluster_instances[0].address
-}

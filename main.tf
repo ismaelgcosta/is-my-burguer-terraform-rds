@@ -13,7 +13,6 @@ module "vpc" {
   private_subnets      = ["10.0.3.0/24", "10.0.4.0/24"]
 
   create_database_subnet_group           = true
-  create_database_subnet_route_table     = true
   create_database_internet_gateway_route = true
 
   enable_dns_hostnames = true
@@ -67,15 +66,5 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
   db_subnet_group_name  = aws_db_subnet_group.db_subnet_group.name
   publicly_accessible  = true # Only for testing!
   apply_immediately  = true
-}
-
-output "cluster_endpoint" {
-  description = "The endpoint for the RDS cluster"
-  value = aws_rds_cluster.cluster.endpoint
-}
-
-output "cluster_read_endpoint" {
-  description = "The read endpoint for the RDS cluster"
-  value = aws_rds_cluster.cluster.reader_endpoint
 }
 

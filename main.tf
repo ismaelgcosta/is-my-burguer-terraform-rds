@@ -69,11 +69,11 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
 
 output "cluster_endpoint" {
   description = "The endpoint for the RDS cluster"
-  value = aws_rds_cluster.ismyburguer.endpoint
+  value = aws_rds_cluster.cluster.endpoint
 }
 
 output "cluster_read_endpoint" {
   description = "The read endpoint for the RDS cluster"
-  value = aws_rds_cluster.ismyburguer.reader_endpoint
+  value = aws_rds_cluster.cluster.reader_endpoint
 }
 

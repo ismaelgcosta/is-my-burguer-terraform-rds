@@ -51,8 +51,9 @@ resource "aws_rds_cluster" "cluster" {
   cluster_identifier      = "ismyburguer"
   master_username         = "ismyburguer"
   master_password         = "ismyburguer"
-
+  database_name           = "ismyburguer"
   db_subnet_group_name    = aws_db_subnet_group.db_subnet_group.name
+  vpc_security_group_ids = [ "${aws_security_group.postgres.id}" ]
   skip_final_snapshot    = true
 }
 
@@ -63,8 +64,9 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
   instance_class     = "db.t3.medium"
   engine             = aws_rds_cluster.cluster.engine
   engine_version     = aws_rds_cluster.cluster.engine_version
-  publicly_accessible    = true # Only for testing!
-  apply_immediately    = true
+  db_subnet_group_name  = aws_db_subnet_group.db_subnet_group.name
+  publicly_accessible  = true # Only for testing!
+  apply_immediately  = true
 }
 
 output "cluster_endpoint" {

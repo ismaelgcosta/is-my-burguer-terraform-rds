@@ -59,7 +59,7 @@ resource "aws_rds_cluster" "cluster" {
 resource "aws_rds_cluster_instance" "cluster_instances" {
   identifier         = "ismyburguer-${count.index}"
   count              = 1
-  cluster_identifier = aws_rds_cluster.ismyburguer.id
+  cluster_identifier = aws_rds_cluster.cluster.id
   instance_class     = "db.t3.medium"
   engine             = aws_rds_cluster.cluster.engine
   engine_version     = aws_rds_cluster.cluster.engine_version

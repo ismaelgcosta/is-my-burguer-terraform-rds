@@ -9,10 +9,10 @@ terraform {
   }
 
   cloud {
-    organization = "ismaelcosta1000"
+    organization = "is-my-burguer"
 
     workspaces {
-      name = "postgres-is-my-burguer"
+      name = "is-my-burguer-postgres"
     }
   }
 

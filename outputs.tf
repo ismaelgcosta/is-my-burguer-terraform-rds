@@ -1,9 +1,4 @@
-output "cluster_endpoint" {
+output "database_endpoint" {
   description = "The endpoint for the RDS cluster"
-  value = aws_rds_cluster.cluster.endpoint
-}
-
-output "cluster_read_endpoint" {
-  description = "The read endpoint for the RDS cluster"
-  value = aws_rds_cluster.cluster.reader_endpoint
+  value = aws_db_instance.is-my-burguer.endpoint
 }

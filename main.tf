@@ -8,9 +8,9 @@ module "vpc" {
   name                 = "ismyburguer"
   cidr                 = "10.0.0.0/16"
   azs                  = ["us-east-1a", "us-east-1b", "us-east-1c"]
-  # public_subnets       = ["10.0.5.0/24", "10.0.6.0/24"]
+  public_subnets       = ["10.0.5.0/24", "10.0.6.0/24"]
   # rds require at least 2 subnet to launch an instance
-  # private_subnets      = ["10.0.3.0/24", "10.0.4.0/24"]
+  private_subnets      = ["10.0.3.0/24", "10.0.4.0/24"]
 
   create_database_subnet_group           = true
   create_database_internet_gateway_route = true
@@ -38,33 +38,22 @@ resource "aws_security_group" "postgres" {
   }
 }
 
-resource "aws_db_subnet_group" "db_subnet_group" {
-  name       = "ismyburguer-db-subnet-group"
-  subnet_ids = module.vpc.public_subnets
-}
+resource "aws_db_instance" "is-my-burguer" {
+  allocated_storage    = 5
+  storage_type         = "gp2"
+  instance_class       = "db.t3.micro"
+  identifier           = "is-my-burguer"
+  engine               = "postgres"
+  engine_version       = "16.2"
+  parameter_group_name = "default.postgres16"
+ 
+  db_name  = "ismyburguer"
+  username = "${var.POSTGRES_USER}"
+  password = "${var.POSTGRES_PASSWORD}"
 
-resource "aws_rds_cluster" "cluster" {
-  engine                  = "aurora-postgresql"
-  engine_mode             = "provisioned"
-  engine_version          = "14.6"
-  cluster_identifier      = "ismyburguer"
-  master_username         = "ismyburguer"
-  master_password         = "ismyburguer"
-  database_name           = "ismyburguer"
-  db_subnet_group_name    = aws_db_subnet_group.db_subnet_group.name
-  vpc_security_group_ids = [ "${aws_security_group.postgres.id}" ]
+  port = 5433
+
+  vpc_security_group_ids = [aws_security_group.postgres.id]
+  publicly_accessible    = true # Only for testing!
   skip_final_snapshot    = true
 }
-
-resource "aws_rds_cluster_instance" "cluster_instances" {
-  identifier         = "ismyburguer-${count.index}"
-  count              = 1
-  cluster_identifier = aws_rds_cluster.cluster.id
-  instance_class     = "db.t3.medium"
-  engine             = aws_rds_cluster.cluster.engine
-  engine_version     = aws_rds_cluster.cluster.engine_version
-  db_subnet_group_name  = aws_db_subnet_group.db_subnet_group.name
-  publicly_accessible  = true # Only for testing!
-  apply_immediately  = true
-}
-

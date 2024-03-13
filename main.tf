@@ -48,8 +48,8 @@ resource "aws_db_instance" "is-my-burguer" {
   parameter_group_name = "default.postgres16"
  
   db_name  = "ismyburguer"
-  username = "${var.POSTGRES_USER}"
-  password = "${var.POSTGRES_PASSWORD}"
+  username = "${var.TF_VAR_POSTGRES_USER}"
+  password = "${var.TF_VAR_POSTGRES_PASSWORD}"
 
   port = 5433
 

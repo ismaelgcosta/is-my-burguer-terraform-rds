@@ -4,7 +4,16 @@ Projeto para aplicação de conhecimentos da Fase 3 da Pós-Graduação em SOFTW
 
 # Modelo Entidade Relacionamento
 
-![alt text](docs/Modelo_Entidade_Relacionamento.png)
+![Modelo Entidade Relacionamento](docs/Modelo_Entidade_Relacionamento.png)
+
+# Por que Postgres?
+
+O PostgreSQL pode lidar eficientemente com as demandas de uma aplicação monolítica, processando grandes volumes de dados de forma confiável.
+
+Quando se trata de escalabilidade, embora o PostgreSQL não tenha as mesmas capacidades de escalabilidade horizontal imediatamente disponíveis como alguns sistemas NoSQL, como o MongoDB ou Cassandra, ele ainda oferece opções de escalabilidade vertical e horizontal através de técnicas como replicação, particionamento de tabelas e uso eficiente de índices.
+
+Em uma aplicação monolítica, a integração com outras partes do sistema é essencial. Nesse quesito os bancos relacionais tem uma vantagem extra por terem como requisito principal garantir a integridade entre os relacionamentos.
+
 
 # Terraform 
 

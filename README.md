@@ -60,4 +60,3 @@ Em uma aplicação monolítica, a integração com outras partes do sistema é e
 | <a name="output_database_endpoint_port"></a> [database\_endpoint\_port](#output\_database\_endpoint\_port) | The port for the RDS cluster |
 | <a name="output_database_instance"></a> [database\_instance](#output\_database\_instance) | The name for the RDS cluster |
 <!-- END_TF_DOCS -->
->>>>>>> Stashed changes

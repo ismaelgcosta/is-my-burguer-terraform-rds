@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-# is-my-burguer-terraform-rds
-=======
 # Is My Burguer
 
 Projeto para aplicação de conhecimentos da Fase 3 da Pós-Graduação em SOFTWARE ARCHITECTURE da FIAP

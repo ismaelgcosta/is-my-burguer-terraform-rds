@@ -16,3 +16,8 @@ output "database_endpoint_port" {
   sensitive = true
 }
 
+output "database_instance" {
+  description = "The name for the RDS cluster"
+  value = aws_db_instance.is-my-burguer.db_name
+}
+

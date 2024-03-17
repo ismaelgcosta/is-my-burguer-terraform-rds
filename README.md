@@ -2,7 +2,6 @@
 
 Projeto para aplicação de conhecimentos da Fase 3 da Pós-Graduação em SOFTWARE ARCHITECTURE da FIAP
 
-
 # Modelo Entidade Relacionamento
 
 ### Tabela Pedido

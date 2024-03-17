@@ -4,6 +4,25 @@ Projeto para aplicação de conhecimentos da Fase 3 da Pós-Graduação em SOFTW
 
 # Modelo Entidade Relacionamento
 
+### Tabela Pedido
+
+É a tabela principal do sistema. A partir dela saem todos os outros relacionamentos e é o principal controle que o sistema precisa fazer segundo a solicitação do cliente.
+Ela controla o status do pedido na fila, guarda a identificação do **Cliente** vinculado e serve de ligação entre as outras tabelas.
+Nela também está o valor total do pedido, que é gravado em banco para evitar ir em outras tabelas ou buscar essa informação favorecendo a performance.
+Sabe-se que isso fere a terceira forma normal na modelagem de dados porém a experiência prévia em sistemas de ERP me mostrou que por vezes essa é a melhor forma de trabalhar com os dados.
+
+### Tabela Item Pedido
+
+É a tabela que guarda as informações do itens solicitados pelo cliente, guardando o preço, a quantidade, a identificação do produto pedido e o valor total.
+Nela também está o valor total do item do pedido, que é gravado em banco para evitar ir em outras tabelas ou buscar essa informação favorecendo a performance.
+Sabe-se que isso fere a terceira forma normal na modelagem de dados porém a experiência prévia em sistemas de ERP me mostrou que por vezes essa é a melhor forma de trabalhar com os dados.
+
+### Tabela Cliente
+
+Foi a mais modificada da Fase 2 para a Fase 3 pois ela armazena todos os dados referentes ao cliente além do seu login no sistema de autenticação. 
+Todas as informações nela serão réplicas das informações guardadas no AWS Cognito, sendo ele a fonte principal das informações do Cliente logado.
+
+
 ![Modelo Entidade Relacionamento](docs/Modelo_Entidade_Relacionamento.png)
 
 # Por que Postgres?

@@ -21,8 +21,19 @@ Sabe-se que isso fere a terceira forma normal na modelagem de dados porém a exp
 ### Tabela Cliente
 
 Foi a mais modificada da Fase 2 para a Fase 3 pois ela armazena todos os dados referentes ao cliente além do seu login no sistema de autenticação. 
-Todas as informações nela serão réplicas das informações guardadas no AWS Cognito, sendo ele a fonte principal das informações do Cliente logado.
+Todas as informações nela serão réplicas das informações guardadas no AWS Cognito, sendo ele (Cognito), a fonte principal das informações do Cliente logado.
 
+### Tabela Produto
+
+É a tabela de controle de preços e de ofertas do cardápio. Nela são armazenadas as informações dos Lanches, Sobremesas e Bebidas do cardápido e é mapeada como chave estrangeira na tabela **Item Pedido** para definição do item escolhido pelo cliente. Permite exclusão lógica por meio da coluna **ativo**.
+
+### Tabela Controle Pedido
+
+É a tabela de utilizada para exibição dos pedidos em fila e também para guardar o histórico de atendimento da lanchonete. Pode ser utilizada para extração de relatórios e verificação da produtividade e velocidade das entregas no estabelecimento. Tem vínculo com o **Pedido** e também serve para controlar o status da fila da lanchonete.
+
+### Pagamento
+
+Essa tabela garante que os pedidos foram pagos antes de serem enviados para a fila, evitando assim fraudes ou retirada de pedidos não pagos e também fornece uma estrutura para levantamento do faturamento da loja, já que um pedido pode não ser concluído. Tem vínculo com o **Pedido** e armazendo também a forma de pagamento que foi utilizada, favorecendo o desenvolvimento de campanhas de promoção e desconto ao fornecer a informação de qual meio de pagamento mais utilizado no estabelecimento.
 
 ![Modelo Entidade Relacionamento](docs/Modelo_Entidade_Relacionamento.png)
 

@@ -22,3 +22,9 @@ output "database_instance" {
   sensitive = true
 }
 
+output "mongodb_endpoint_host" {
+  description = "The address for the MongoDB cluster"
+  value = mongodbatlas_cluster.mongodb.mongo_uri
+  sensitive = true
+}
+

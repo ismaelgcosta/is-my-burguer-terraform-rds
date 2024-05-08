@@ -57,3 +57,68 @@ resource "aws_db_instance" "is-my-burguer" {
   publicly_accessible    = true # Only for testing!
   skip_final_snapshot    = true
 }
+
+resource "mongodbatlas_cluster" "mongodb" {
+  name                        = "is-my-burguer-mongodb"
+  project_id                  = var.TF_VAR_MONGODB_ATLAS_PROJECT_ID
+  provider_instance_size_name = "M0"
+  provider_name               = "TENANT"
+  backing_provider_name       = "AWS"
+  provider_region_name        = "US_EAST_1"
+  cluster_type                = "REPLICASET"
+  backup_enabled              = false
+}
+
+resource "mongodbatlas_database_user" "mongodb" {
+  depends_on         = [mongodbatlas_cluster.mongodb]
+  username           = "${var.TF_VAR_MONGODB_USERNAME}"
+  password           = "${var.TF_VAR_MONGODB_PASSWORD}"
+  project_id         = var.TF_VAR_MONGODB_ATLAS_PROJECT_ID
+  auth_database_name = "admin"
+
+  roles {
+    role_name     = "readWriteAnyDatabase"
+    database_name = "admin"
+  }
+}
+
+resource "mongodbatlas_database_user" "pagamento" {
+  depends_on         = [mongodbatlas_database_user.mongodb]
+  username           = "${var.TF_VAR_MONGODB_PAGAMENTO_USERNAME}"
+  password           = "${var.TF_VAR_MONGODB_PAGAMENTO_PASSWORD}"
+  project_id         = var.TF_VAR_MONGODB_ATLAS_PROJECT_ID
+  auth_database_name = "admin"
+
+  roles {
+    role_name     = "readWriteAnyDatabase"
+    database_name = "admin"
+  }
+}
+
+resource "mongodbatlas_database_user" "auth" {
+  depends_on         = [mongodbatlas_cluster.mongodb]
+  username           = "${var.TF_VAR_MONGODB_AUTH_USERNAME}"
+  password           = "${var.TF_VAR_MONGODB_AUTH_PASSWORD}"
+  project_id         = var.TF_VAR_MONGODB_ATLAS_PROJECT_ID
+  auth_database_name = "admin"
+
+  roles {
+    role_name     = "readWriteAnyDatabase"
+    database_name = "admin"
+  }
+}
+
+
+resource "mongodbatlas_database_user" "controle-pedido" {
+  depends_on         = [mongodbatlas_cluster.mongodb]
+  username           = "${var.TF_VAR_MONGODB_CONTROLE_PEDIDO_USERNAME}"
+  password           = "${var.TF_VAR_MONGODB_CONTROLE_PEDIDO_PASSWORD}"
+  project_id         = var.TF_VAR_MONGODB_ATLAS_PROJECT_ID
+  auth_database_name = "admin"
+
+  roles {
+    role_name     = "readWriteAnyDatabase"
+    database_name = "admin"
+  }
+}
+

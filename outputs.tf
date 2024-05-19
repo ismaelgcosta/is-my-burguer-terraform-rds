@@ -24,7 +24,7 @@ output "database_instance" {
 
 output "mongodb_endpoint_host" {
   description = "The address for the MongoDB cluster"
-  value = [split("mongodb+srv://", mongodbatlas_cluster.mongodb.connection_strings[0].standard_srv)[1]]
+  value = split("mongodb+srv://", mongodbatlas_cluster.mongodb.connection_strings[0].standard_srv)[1]
   sensitive = true
 }
 

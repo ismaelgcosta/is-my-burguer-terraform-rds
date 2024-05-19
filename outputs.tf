@@ -18,13 +18,12 @@ output "database_endpoint_port" {
 
 output "database_instance" {
   description = "The name for the RDS cluster"
-  value = aws_db_instance.is-my-burguer.db_name
-  sensitive = true
+  value = aws_db_instance.is-my-burguer.identifier
 }
 
 output "mongodb_endpoint_host" {
   description = "The address for the MongoDB cluster"
-  value = mongodbatlas_cluster.mongodb.mongo_uri
+  value = split("mongodb+srv://",mongodbatlas_cluster.mongodb.srv_address)[1]
   sensitive = true
 }
 

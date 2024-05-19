@@ -18,24 +18,25 @@ Sabe-se que isso fere a terceira forma normal na modelagem de dados porém a exp
 Nela também está o valor total do item do pedido, que é gravado em banco para evitar ir em outras tabelas ou buscar essa informação favorecendo a performance.
 Sabe-se que isso fere a terceira forma normal na modelagem de dados porém a experiência prévia em sistemas de ERP me mostrou que por vezes essa é a melhor forma de trabalhar com os dados.
 
-### Tabela Cliente
-
-Foi a mais modificada da Fase 2 para a Fase 3 pois ela armazena todos os dados referentes ao cliente além do seu login no sistema de autenticação. 
-Todas as informações nela serão réplicas das informações guardadas no AWS Cognito, sendo ele (Cognito), a fonte principal das informações do Cliente logado.
-
 ### Tabela Produto
 
 É a tabela de controle de preços e de ofertas do cardápio. Nela são armazenadas as informações dos Lanches, Sobremesas e Bebidas do cardápido e é mapeada como chave estrangeira na tabela **Item Pedido** para definição do item escolhido pelo cliente. Permite exclusão lógica por meio da coluna **ativo**.
 
-### Tabela Controle Pedido
 
-É a tabela de utilizada para exibição dos pedidos em fila e também para guardar o histórico de atendimento da lanchonete. Pode ser utilizada para extração de relatórios e verificação da produtividade e velocidade das entregas no estabelecimento. Tem vínculo com o **Pedido** e também serve para controlar o status da fila da lanchonete.
+### Collection Cliente
+
+Foi criada na Fase 4 no lugar da tabela no Postgres. Ela armazena todos os dados referentes ao cliente além do seu login no sistema de autenticação. 
+Todas as informações nela serão réplicas das informações guardadas no AWS Cognito, sendo ele (Cognito), a fonte principal das informações do Cliente logado.
+
+
+### Collection Controle Pedido
+
+É a collection utilizada para exibição dos pedidos em fila e também para guardar o histórico de atendimento da lanchonete. Também foi passada para o MongoDB na Fase 4. Pode ser utilizada para extração de relatórios e verificação da produtividade e velocidade das entregas no estabelecimento. Tem vínculo com o **Pedido** e também serve para controlar o status da fila da lanchonete.
 
 ### Pagamento
 
-Essa tabela garante que os pedidos foram pagos antes de serem enviados para a fila, evitando assim fraudes ou retirada de pedidos não pagos e também fornece uma estrutura para levantamento do faturamento da loja, já que um pedido pode não ser concluído. Tem vínculo com o **Pedido** e armazendo também a forma de pagamento que foi utilizada, favorecendo o desenvolvimento de campanhas de promoção e desconto ao fornecer a informação de qual meio de pagamento mais utilizado no estabelecimento.
+É a collection que garante que os pedidos foram pagos antes de serem enviados para a fila, evitando assim fraudes ou retirada de pedidos não pagos e também fornece uma estrutura para levantamento do faturamento da loja, já que um pedido pode não ser concluído. Tem vínculo com o **Pedido** e armazendo também a forma de pagamento que foi utilizada, favorecendo o desenvolvimento de campanhas de promoção e desconto ao fornecer a informação de qual meio de pagamento mais utilizado no estabelecimento.
 
-![Modelo Entidade Relacionamento](docs/Modelo_Entidade_Relacionamento.png)
 
 # Por que Postgres?
 
@@ -43,8 +44,21 @@ O PostgreSQL pode lidar eficientemente com as demandas de uma aplicação monol�
 
 Quando se trata de escalabilidade, embora o PostgreSQL não tenha as mesmas capacidades de escalabilidade horizontal imediatamente disponíveis como alguns sistemas NoSQL, como o MongoDB ou Cassandra, ele ainda oferece opções de escalabilidade vertical e horizontal através de técnicas como replicação, particionamento de tabelas e uso eficiente de índices.
 
-Em uma aplicação monolítica, a integração com outras partes do sistema é essencial. Nesse quesito os bancos relacionais tem uma vantagem extra por terem como requisito principal garantir a integridade entre os relacionamentos.
+Em uma aplicação, a integração com outras partes do sistema é essencial. Nesse quesito os bancos relacionais tem uma vantagem extra por terem como requisito principal garantir a integridade entre os relacionamentos.
 
+# Por que Postgres?
+
+MongoDB é ideal para aplicações de alta concorrência devido à sua escalabilidade horizontal, permitindo adicionar servidores conforme a carga aumenta. 
+
+Oferece alta performance em operações de leitura e escrita e um modelo de dados flexível que facilita mudanças rápidas. 
+Suporta índices complexos e sharding, distribuindo dados eficientemente. 
+
+Replica Sets garantem alta disponibilidade e resiliência, enquanto transações multi-documento (a partir da versão 4.0) asseguram consistência. 
+Além disso, possui uma grande comunidade e um ecossistema rico de ferramentas, tornando-o uma escolha robusta e confiável para ambientes exigentes.
+
+Para utilização em dados que serão acessados de forma constante ele é a melhor escolha
+
+![Modelo Entidade Relacionamento 2](docs/Modelo_Entidade_Relacionamento2.png)
 
 # Terraform 
 

@@ -33,7 +33,7 @@ Todas as informações nela serão réplicas das informações guardadas no AWS 
 
 É a collection utilizada para exibição dos pedidos em fila e também para guardar o histórico de atendimento da lanchonete. Também foi passada para o MongoDB na Fase 4. Pode ser utilizada para extração de relatórios e verificação da produtividade e velocidade das entregas no estabelecimento. Tem vínculo com o **Pedido** e também serve para controlar o status da fila da lanchonete.
 
-### Pagamento
+### Collection Pagamento
 
 É a collection que garante que os pedidos foram pagos antes de serem enviados para a fila, evitando assim fraudes ou retirada de pedidos não pagos e também fornece uma estrutura para levantamento do faturamento da loja, já que um pedido pode não ser concluído. Tem vínculo com o **Pedido** e armazendo também a forma de pagamento que foi utilizada, favorecendo o desenvolvimento de campanhas de promoção e desconto ao fornecer a informação de qual meio de pagamento mais utilizado no estabelecimento.
 
@@ -46,7 +46,7 @@ Quando se trata de escalabilidade, embora o PostgreSQL não tenha as mesmas capa
 
 Em uma aplicação, a integração com outras partes do sistema é essencial. Nesse quesito os bancos relacionais tem uma vantagem extra por terem como requisito principal garantir a integridade entre os relacionamentos.
 
-# Por que Postgres?
+# Por que MongoDB?
 
 MongoDB é ideal para aplicações de alta concorrência devido à sua escalabilidade horizontal, permitindo adicionar servidores conforme a carga aumenta. 
 
@@ -69,12 +69,14 @@ Para utilização em dados que serão acessados de forma constante ele é a melh
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.33 |
+| <a name="requirement_mongodbatlas"></a> [mongodbatlas](#requirement\_mongodbatlas) | 1.16.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | 5.39.0 |
+| <a name="provider_mongodbatlas"></a> [mongodbatlas](#provider\_mongodbatlas) | 1.16.0 |
 
 ## Modules
 
@@ -88,11 +90,27 @@ Para utilização em dados que serão acessados de forma constante ele é a melh
 |------|------|
 | [aws_db_instance.is-my-burguer](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance) | resource |
 | [aws_security_group.postgres](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
+| [mongodbatlas_cluster.mongodb](https://registry.terraform.io/providers/mongodb/mongodbatlas/1.16.0/docs/resources/cluster) | resource |
+| [mongodbatlas_database_user.auth](https://registry.terraform.io/providers/mongodb/mongodbatlas/1.16.0/docs/resources/database_user) | resource |
+| [mongodbatlas_database_user.controle-pedido](https://registry.terraform.io/providers/mongodb/mongodbatlas/1.16.0/docs/resources/database_user) | resource |
+| [mongodbatlas_database_user.mongodb](https://registry.terraform.io/providers/mongodb/mongodbatlas/1.16.0/docs/resources/database_user) | resource |
+| [mongodbatlas_database_user.pagamento](https://registry.terraform.io/providers/mongodb/mongodbatlas/1.16.0/docs/resources/database_user) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_TF_VAR_MONGODB_ATLAS_API_PRI_KEY"></a> [TF\_VAR\_MONGODB\_ATLAS\_API\_PRI\_KEY](#input\_TF\_VAR\_MONGODB\_ATLAS\_API\_PRI\_KEY) | precisa começar com TF\_VAR\_ | `string` | `"my-private-key"` | no |
+| <a name="input_TF_VAR_MONGODB_ATLAS_API_PUB_KEY"></a> [TF\_VAR\_MONGODB\_ATLAS\_API\_PUB\_KEY](#input\_TF\_VAR\_MONGODB\_ATLAS\_API\_PUB\_KEY) | precisa começar com TF\_VAR\_ | `string` | `"my-public-key"` | no |
+| <a name="input_TF_VAR_MONGODB_ATLAS_PROJECT_ID"></a> [TF\_VAR\_MONGODB\_ATLAS\_PROJECT\_ID](#input\_TF\_VAR\_MONGODB\_ATLAS\_PROJECT\_ID) | precisa começar com TF\_VAR\_ | `string` | `"my-private-project"` | no |
+| <a name="input_TF_VAR_MONGODB_AUTH_PASSWORD"></a> [TF\_VAR\_MONGODB\_AUTH\_PASSWORD](#input\_TF\_VAR\_MONGODB\_AUTH\_PASSWORD) | The password for the mongodb database. | `string` | n/a | yes |
+| <a name="input_TF_VAR_MONGODB_AUTH_USERNAME"></a> [TF\_VAR\_MONGODB\_AUTH\_USERNAME](#input\_TF\_VAR\_MONGODB\_AUTH\_USERNAME) | The username for the mongodb database. | `string` | n/a | yes |
+| <a name="input_TF_VAR_MONGODB_CONTROLE_PEDIDO_PASSWORD"></a> [TF\_VAR\_MONGODB\_CONTROLE\_PEDIDO\_PASSWORD](#input\_TF\_VAR\_MONGODB\_CONTROLE\_PEDIDO\_PASSWORD) | The password for the mongodb database. | `string` | n/a | yes |
+| <a name="input_TF_VAR_MONGODB_CONTROLE_PEDIDO_USERNAME"></a> [TF\_VAR\_MONGODB\_CONTROLE\_PEDIDO\_USERNAME](#input\_TF\_VAR\_MONGODB\_CONTROLE\_PEDIDO\_USERNAME) | The username for the mongodb database. | `string` | n/a | yes |
+| <a name="input_TF_VAR_MONGODB_PAGAMENTO_PASSWORD"></a> [TF\_VAR\_MONGODB\_PAGAMENTO\_PASSWORD](#input\_TF\_VAR\_MONGODB\_PAGAMENTO\_PASSWORD) | The password for the mongodb database. | `string` | n/a | yes |
+| <a name="input_TF_VAR_MONGODB_PAGAMENTO_USERNAME"></a> [TF\_VAR\_MONGODB\_PAGAMENTO\_USERNAME](#input\_TF\_VAR\_MONGODB\_PAGAMENTO\_USERNAME) | The username for the mongodb database. | `string` | n/a | yes |
+| <a name="input_TF_VAR_MONGODB_PASSWORD"></a> [TF\_VAR\_MONGODB\_PASSWORD](#input\_TF\_VAR\_MONGODB\_PASSWORD) | The password for the mongodb database. | `string` | n/a | yes |
+| <a name="input_TF_VAR_MONGODB_USERNAME"></a> [TF\_VAR\_MONGODB\_USERNAME](#input\_TF\_VAR\_MONGODB\_USERNAME) | The username for the mongodb database. | `string` | n/a | yes |
 | <a name="input_TF_VAR_POSTGRES_PASSWORD"></a> [TF\_VAR\_POSTGRES\_PASSWORD](#input\_TF\_VAR\_POSTGRES\_PASSWORD) | The master password for the database. | `string` | n/a | yes |
 | <a name="input_TF_VAR_POSTGRES_USER"></a> [TF\_VAR\_POSTGRES\_USER](#input\_TF\_VAR\_POSTGRES\_USER) | The master username for the database. | `string` | n/a | yes |
 
@@ -104,4 +122,5 @@ Para utilização em dados que serão acessados de forma constante ele é a melh
 | <a name="output_database_endpoint_host"></a> [database\_endpoint\_host](#output\_database\_endpoint\_host) | The address for the RDS cluster |
 | <a name="output_database_endpoint_port"></a> [database\_endpoint\_port](#output\_database\_endpoint\_port) | The port for the RDS cluster |
 | <a name="output_database_instance"></a> [database\_instance](#output\_database\_instance) | The name for the RDS cluster |
+| <a name="output_mongodb_endpoint_host"></a> [mongodb\_endpoint\_host](#output\_mongodb\_endpoint\_host) | The address for the MongoDB cluster |
 <!-- END_TF_DOCS -->

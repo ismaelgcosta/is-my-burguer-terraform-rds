@@ -5,6 +5,8 @@ Projeto para aplicação de conhecimentos da Fase 3 da Pós-Graduação em SOFTW
 
 # Modelo Entidade Relacionamento
 
+## Postgres
+
 ### Tabela Pedido
 
 É a tabela principal do sistema. A partir dela saem todos os outros relacionamentos e é o principal controle que o sistema precisa fazer segundo a solicitação do cliente.
@@ -22,18 +24,22 @@ Sabe-se que isso fere a terceira forma normal na modelagem de dados porém a exp
 
 É a tabela de controle de preços e de ofertas do cardápio. Nela são armazenadas as informações dos Lanches, Sobremesas e Bebidas do cardápido e é mapeada como chave estrangeira na tabela **Item Pedido** para definição do item escolhido pelo cliente. Permite exclusão lógica por meio da coluna **ativo**.
 
+## MongoDB
 
 ### Collection Cliente
 
 Foi criada na Fase 4 no lugar da tabela no Postgres. Ela armazena todos os dados referentes ao cliente além do seu login no sistema de autenticação. 
 Todas as informações nela serão réplicas das informações guardadas no AWS Cognito, sendo ele (Cognito), a fonte principal das informações do Cliente logado.
 
+### Collection Solicitacao Exclusao
+
+Foi criada na Fase 5 para registrar os pedidos de solicitação de exclusão e anonimização de dados seguindo as regras da LGDP.
 
 ### Collection Controle Pedido
 
 É a collection utilizada para exibição dos pedidos em fila e também para guardar o histórico de atendimento da lanchonete. Também foi passada para o MongoDB na Fase 4. Pode ser utilizada para extração de relatórios e verificação da produtividade e velocidade das entregas no estabelecimento. Tem vínculo com o **Pedido** e também serve para controlar o status da fila da lanchonete.
 
-### Pagamento
+### Collection Pagamento
 
 É a collection que garante que os pedidos foram pagos antes de serem enviados para a fila, evitando assim fraudes ou retirada de pedidos não pagos e também fornece uma estrutura para levantamento do faturamento da loja, já que um pedido pode não ser concluído. Tem vínculo com o **Pedido** e armazendo também a forma de pagamento que foi utilizada, favorecendo o desenvolvimento de campanhas de promoção e desconto ao fornecer a informação de qual meio de pagamento mais utilizado no estabelecimento.
 

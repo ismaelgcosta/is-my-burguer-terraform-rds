@@ -5,6 +5,8 @@ Projeto para aplicação de conhecimentos da Fase 3 da Pós-Graduação em SOFTW
 
 # Modelo Entidade Relacionamento
 
+## Postgres
+
 ### Tabela Pedido
 
 É a tabela principal do sistema. A partir dela saem todos os outros relacionamentos e é o principal controle que o sistema precisa fazer segundo a solicitação do cliente.
@@ -22,12 +24,16 @@ Sabe-se que isso fere a terceira forma normal na modelagem de dados porém a exp
 
 É a tabela de controle de preços e de ofertas do cardápio. Nela são armazenadas as informações dos Lanches, Sobremesas e Bebidas do cardápido e é mapeada como chave estrangeira na tabela **Item Pedido** para definição do item escolhido pelo cliente. Permite exclusão lógica por meio da coluna **ativo**.
 
+## MongoDB
 
 ### Collection Cliente
 
 Foi criada na Fase 4 no lugar da tabela no Postgres. Ela armazena todos os dados referentes ao cliente além do seu login no sistema de autenticação. 
 Todas as informações nela serão réplicas das informações guardadas no AWS Cognito, sendo ele (Cognito), a fonte principal das informações do Cliente logado.
 
+### Collection Solicitacao Exclusao
+
+Foi criada na Fase 5 para registrar os pedidos de solicitação de exclusão e anonimização de dados seguindo as regras da LGDP.
 
 ### Collection Controle Pedido
 

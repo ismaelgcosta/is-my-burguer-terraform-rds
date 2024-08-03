@@ -9,13 +9,12 @@ terraform {
 
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
-      version = ">= 5.33"
+      version = "~> 5.61.0"
     }
 
     mongodbatlas = {
       source  = "mongodb/mongodbatlas"
-      version = "1.16.0"
+      version = "1.17.3"
     }
 
   }
